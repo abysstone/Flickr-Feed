@@ -1,6 +1,7 @@
 package com.abysstone.flickrfeed;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -10,7 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-class GetFlickrJsonData implements GetRawData.onDownloadComplete {
+class GetFlickrJsonData extends AsyncTask<String, Void, List<Photo>> implements GetRawData.onDownloadComplete {
     private static final String TAG = "GetFlickrJsonData";
 
     private List<Photo> mPhotoList = null;
@@ -19,6 +20,7 @@ class GetFlickrJsonData implements GetRawData.onDownloadComplete {
     private Boolean mMatchAll;
 
     private final OnDataAvailable mCallBack;
+    private boolean runningOnSameThread = false;
 
     interface OnDataAvailable{
         void onDataAvailable(List<Photo> data, DownloadStatus status);
@@ -34,11 +36,33 @@ class GetFlickrJsonData implements GetRawData.onDownloadComplete {
 
     void executeOnSameThread(String searchCriteria){
         Log.d(TAG, "executeOnSameThread: starts");
+        runningOnSameThread = true;
         String destinationUri = createUri(searchCriteria, mLanguage, mMatchAll);
 
         GetRawData getRawData = new GetRawData(this);
         getRawData.execute(destinationUri);
         Log.d(TAG, "executeOnSameThread: ends");
+    }
+
+
+    @Override
+    protected void onPostExecute(List<Photo> photos) {
+        Log.d(TAG, "onPostExecute: starts");
+//        super.onPostExecute(photos);
+        if (mCallBack != null){
+            mCallBack.onDataAvailable(mPhotoList,DownloadStatus.OK);
+        }
+        Log.d(TAG, "onPostExecute: ends");
+    }
+
+    @Override
+    protected List<Photo> doInBackground(String... params) {
+        Log.d(TAG, "doInBackground: Starts");
+        String destinationUri = createUri(params[0], mLanguage, mMatchAll);
+
+        GetRawData getRawData = new GetRawData(this);
+        getRawData.runInSameThread(destinationUri);
+        return mPhotoList;
     }
 
     private String createUri(String searchCriteria, String lang, boolean matchAll){
@@ -85,7 +109,7 @@ class GetFlickrJsonData implements GetRawData.onDownloadComplete {
                 mDownloadStatus = DownloadStatus.FAILED_OR_EMPTY;
             }
         }
-        if (mCallBack != null){
+        if (runningOnSameThread && mCallBack != null){
             //now inform the caller that processing is done - possibly running null if there was an error
             mCallBack.onDataAvailable(mPhotoList, mDownloadStatus);
         }
