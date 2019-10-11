@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements GetRawData.onDownloadComplete{
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements GetFlickrJsonData.OnDataAvailable{
 
     private static final String TAG = "MainActivity";
 
@@ -19,17 +21,18 @@ public class MainActivity extends AppCompatActivity implements GetRawData.onDown
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        GetRawData getRawData = new GetRawData(this);
-        getRawData.execute("https://www.flickr.com/services/feeds/photos_public.gne?tags=android,nougat,sdk&tagmode=any&format=json&nojsoncallback=1");
+//        GetRawData getRawData = new GetRawData(this);
+//        getRawData.execute("https://www.flickr.com/services/feeds/photos_public.gne?tags=android,nougat,sdk&tagmode=any&format=json&nojsoncallback=1");
 
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d(TAG, "onResume: Starts");
+        super.onResume();
+        GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData("https://www.flickr.com/services/feeds/photos_public.gne","en-us",true,this);
+        getFlickrJsonData.executeOnSameThread("android , nougat");
+        Log.d(TAG, "onResume: ends!");
     }
 
     @Override
@@ -54,15 +57,14 @@ public class MainActivity extends AppCompatActivity implements GetRawData.onDown
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
-    public void OnDownloadComplete(String data, DownloadStatus status){
+    public void onDataAvailable(List<Photo> data, DownloadStatus status) {
         if (status == DownloadStatus.OK){
-            Log.d(TAG, "OnDownloadComplete: Data is "+ data);
+            Log.d(TAG, "OnDataAvailable: Data is "+ data);
         }else {
             //download or processing failed...
-            Log.d(TAG, "OnDownloadComplete: failed with status "+ status);
+            Log.d(TAG, "OnDataAvailable: failed with status "+ status);
         }
     }
-
-
 }
