@@ -7,12 +7,15 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GetFlickrJsonData.OnDataAvailable{
-
     private static final String TAG = "MainActivity";
+    private FlickrRecyclerViewAdapter mFlickrRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,12 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mFlickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(this, new ArrayList<Photo>());
+        recyclerView.setAdapter(mFlickrRecyclerViewAdapter);
 
 //        GetRawData getRawData = new GetRawData(this);
 //        getRawData.execute("https://www.flickr.com/services/feeds/photos_public.gne?tags=android,nougat,sdk&tagmode=any&format=json&nojsoncallback=1");
@@ -62,11 +71,14 @@ public class MainActivity extends AppCompatActivity implements GetFlickrJsonData
 
     @Override
     public void onDataAvailable(List<Photo> data, DownloadStatus status) {
+        Log.d(TAG, "onDataAvailable: starts");
         if (status == DownloadStatus.OK){
-            Log.d(TAG, "OnDataAvailable: Data is "+ data);
+            //Log.d(TAG, "OnDataAvailable: Data is "+ data);
+            mFlickrRecyclerViewAdapter.loadNewData(data);
         }else {
             //download or processing failed...
             Log.d(TAG, "OnDataAvailable: failed with status "+ status);
         }
+        Log.d(TAG, "onDataAvailable: ends");
     }
 }
