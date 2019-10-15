@@ -32,13 +32,13 @@ public class PhotoDetailActivity extends BaseActivity {
         Photo photo = (Photo) intent.getSerializableExtra(PHOTO_TRANSFER);
         if (photo != null){
             TextView photoTitle = (TextView) findViewById(R.id.photo_title);
-            photoTitle.setText("Title" + photo.getmTitle());
+            photoTitle.setText("TITLE : " + photo.getmTitle());
 
             TextView photoTags = (TextView) findViewById(R.id.photo_tags);
-            photoTags.setText("Title" + photo.getmTag());
+            photoTags.setText("TAGS : " + photo.getmTag());
 
             TextView photoAuthor = (TextView) findViewById(R.id.photo_author);
-            photoAuthor.setText("Title" + photo.getmAuthor());
+            photoAuthor.setText("author - " + photo.getmAuthor());
 
             ImageView photoImage = (ImageView) findViewById(R.id.photo_image);
             Picasso.with(this).load(photo.getmLink())

@@ -1,7 +1,9 @@
 package com.abysstone.flickrfeed;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,10 +48,15 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
     protected void onResume() {
         Log.d(TAG, "onResume: Starts");
         super.onResume();
-        GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData("https://www.flickr.com/services/feeds/photos_public.gne","en-us",true,this);
-        //getFlickrJsonData.executeOnSameThread("android , nougat");
 
-        getFlickrJsonData.execute("android , nougat");
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String queryResult = sharedPreferences.getString(FLICKR_QUERY, "");
+
+        if (queryResult.length() > 0){
+            GetFlickrJsonData getFlickrJsonData = new GetFlickrJsonData("https://www.flickr.com/services/feeds/photos_public.gne","en-us",true,this);
+            getFlickrJsonData.execute(queryResult);
+        }
+
         Log.d(TAG, "onResume: ends!");
     }
 
@@ -69,6 +76,12 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_search){
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -92,7 +105,8 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, "onItemClick: starts");
-        Toast.makeText(MainActivity.this,"Normal tap at position " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this,"Long press an item to see details", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this,"Normal tap at position " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override

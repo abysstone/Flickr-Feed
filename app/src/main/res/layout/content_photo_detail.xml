@@ -32,7 +32,7 @@
                     android:layout_margin="8dp"
                     android:text="TextView"
                     android:textColor="@android:color/white"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     app:fontFamily="sans-serif-black" />
 
                 <ImageView
@@ -51,7 +51,7 @@
                     android:layout_margin="8dp"
                     android:text="TextView"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
                     app:fontFamily="sans-serif-black" />
 
                 <TextView
@@ -61,8 +61,9 @@
                     android:layout_margin="8dp"
                     android:text="TextView"
                     android:textColor="@android:color/white"
-                    android:textStyle="italic"
-                    app:fontFamily="sans-serif-medium" />
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    app:fontFamily="sans-serif-smallcaps" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
