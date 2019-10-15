@@ -30,7 +30,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    app:fontFamily="sans-serif-black" />
 
                 <ImageView
                     android:id="@+id/photo_image"
@@ -46,14 +49,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp"
+                    app:fontFamily="sans-serif-black" />
 
                 <TextView
                     android:id="@+id/photo_tags"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="TextView" />
+                    android:text="TextView"
+                    android:textColor="@android:color/white"
+                    android:textStyle="italic"
+                    app:fontFamily="sans-serif-medium" />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

@@ -22,5 +22,9 @@
         android:layout_marginLeft="16dp"
         android:layout_weight="2"
         android:padding="8dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="#5D4037"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:fontFamily="sans-serif-black" />
 </LinearLayout>
