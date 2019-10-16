@@ -5,8 +5,8 @@ Flicker Browser Android application.
 
 --------------------------------------------------ScreenGrabs*****************************************************
 
-<img src="http://bollywoodguitartabs.in/wp-content/uploads/2019/10/search550.png"></img>
-<img src="http://bollywoodguitartabs.in/wp-content/uploads/2019/10/home550.png"></img>
-<img src="http://bollywoodguitartabs.in/wp-content/uploads/2019/10/result550.png"></img>
+<img src="http://bollywoodguitartabs.in/wp-content/uploads/2019/10/screenshot12.png" width="33%"></img>
+<img src="http://bollywoodguitartabs.in/wp-content/uploads/2019/10/screenshot1.png" width="33%"></img>
+<img src="http://bollywoodguitartabs.in/wp-content/uploads/2019/10/screenshot2.png" width="33%"></img>
 
 SEARCH FOR PHOTOS FROM THE FLICKR DATABASE AND HAVE A BLAST !!!
