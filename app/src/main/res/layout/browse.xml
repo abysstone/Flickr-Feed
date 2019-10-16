@@ -23,7 +23,7 @@
         android:layout_weight="2"
         android:padding="8dp"
         android:text="TextView"
-        android:textColor="#5D4037"
+        android:textColor="#334f3b"
         android:textSize="16sp"
         android:textStyle="normal"
         app:fontFamily="sans-serif-black" />

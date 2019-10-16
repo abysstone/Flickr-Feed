@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -105,7 +104,10 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
     @Override
     public void onItemClick(View view, int position) {
         Log.d(TAG, "onItemClick: starts");
-        Toast.makeText(MainActivity.this,"Long press an item to see details", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, PhotoDetailActivity.class);
+        intent.putExtra(PHOTO_TRANSFER, mFlickrRecyclerViewAdapter.getPhoto(position));
+        startActivity(intent);
+//        Toast.makeText(MainActivity.this,"Long press an item to see details", Toast.LENGTH_SHORT).show();
 //        Toast.makeText(MainActivity.this,"Normal tap at position " + position, Toast.LENGTH_SHORT).show();
     }
 
@@ -113,8 +115,6 @@ public class MainActivity extends BaseActivity implements GetFlickrJsonData.OnDa
     public void onItemLongClick(View view, int position) {
         Log.d(TAG, "onItemLongClick: starts");
 //        Toast.makeText(MainActivity.this,"Long tap at position " + position, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, PhotoDetailActivity.class);
-        intent.putExtra(PHOTO_TRANSFER, mFlickrRecyclerViewAdapter.getPhoto(position));
-        startActivity(intent);
+
     }
 }
